@@ -33,7 +33,8 @@ def make_colors(string, foreground = '', background = '', attrs = '', color_type
         for i in attrs:
             args.update({i: True,})
         
-        return click.secho(string, fg = fg, bg = bg, **args)
+        click.secho(string, fg = fg, bg = bg, **args)
+        return ''
 
     except ImportError:
         return string
