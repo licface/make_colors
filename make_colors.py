@@ -1,6 +1,8 @@
 import sys
+import traceback
+import os
 
-def make_colors(string, foreground = '', background = '', attrs = '', color_type = 'termcolor'):
+def make_colors(string, foreground = '', background = '', attrs = '', color_type = 'win10color'):
     """
         attributes termcolor [attrs]:
         ============ ======= ==== ========= ========== ======= =========
@@ -26,6 +28,86 @@ def make_colors(string, foreground = '', background = '', attrs = '', color_type
         foreground = ''
     if not attrs:
         attrs = []                
+
+    def win10colors(foreground = foreground, background = background, attrs=[]):
+        '''win10color
+        
+        print out coloring for windows >= 10
+        
+        Keyword Arguments:
+            foreground {str} -- string fore color (default: {''})
+            background {str} -- background color  (default: {''})
+            attrs {list} -- attribute support: reset, bold, underline, inverse
+        '''
+        # attrs_bank = {}
+        # reset = ''
+        # bold = ''
+        # underline = ''
+        # inverse = ''
+        # if attrs:
+        #     for i in attrs:
+        #         if i == 'reset':
+        #             reset = '0m'
+        #         elif i == 'bold':
+        #             bold = '1m'
+        #         elif i == 'underline':
+        #             underline = '4m'
+        #         elif i == 'inverse':
+        #             inverse = '7m'
+
+        fore_color_bank = {
+            'black': '30m',
+            'red': '31m',
+            'green': '32m',
+            'yellow': '33m',
+            'blue': '34m',
+            'magenta': '35m',
+            'cyan': '36m',
+            'white': '37m',
+
+            'lightblack': '90m',
+            'lightgrey': '90m',
+            'lightred': '91m',
+            'lightgreen': '92m',
+            'lightyellow': '93m',
+            'lightblue': '94m',
+            'lightmagenta': '95m',
+            'lightcyan': '96m',
+            'lightwhite': '97m',
+
+        }
+
+        back_color_bank = {
+            'black': '40m',
+            'red': '41m',
+            'green': '42m',
+            'yellow': '43m',
+            'blue': '44m',
+            'magenta': '45m',
+            'cyan': '46m',
+            'white': '47m',
+
+            'lightblack': '100m',
+            'lightgrey': '100m',
+            'lightred': '101m',
+            'lightgreen': '102m',
+            'lightyellow': '103m',
+            'lightblue': '104m',
+            'lightmagenta': '105m',
+            'lightcyan': '106m',
+            'lightwhite': '107m',
+
+        }
+
+        background = back_color_bank.get(background)
+        foreground = fore_color_bank.get(foreground)
+        if not background:
+            background = '40m'
+        if not foreground:
+            foreground = '37m'
+
+        os.system("echo [%s;%s%s[0m" % (background[:-1], foreground, string))
+
 
     def set_colorama(foreground = foreground, background = background):
         try:
@@ -188,7 +270,9 @@ def make_colors(string, foreground = '', background = '', attrs = '', color_type
             print 'NO MODULE NAME: "termcolor'
             return string
         termcolor.RESET
-            
+    
+    if os.getenv('COLOR_TYPE'):
+        color_type = os.getenv('COLOR_TYPE')            
     if color_type == 'colorama':
         try:
             a = set_colorama()
@@ -207,5 +291,17 @@ def make_colors(string, foreground = '', background = '', attrs = '', color_type
             d = set_colorama()
             #print "d =", d
             return d
+    elif color_type == 'win10color':
+        try:
+            c = win10colors()
+            return c
+        except:
+            traceback.format_exc()
+    elif color_type == 'netral':
+        return string
+    else:
+        color_type == 'termcolor'
 
+if __name__ == '__main__':
+    make_colors("TEST STRING", 'white', 'red', color_type='win10color')
     
