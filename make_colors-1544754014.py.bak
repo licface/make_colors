@@ -1,4 +1,4 @@
-import os
+
 class Win10Colors(object):
     """docstring for Win10Colors"""
     def __init__(self):
@@ -104,9 +104,4 @@ class Win10Colors(object):
 
 def make_colors(string, foreground = 'white', background=None, attrs=[]):
     win10color = Win10Colors()
-    if os.getenv('MAKE_COLORS') == '0':
-    		return string
-    elif os.getenv('MAKE_COLORS') == '1':
-    		return win10color.colored(string, foreground, background, attrs)
-    else:
-    		return win10color.colored(string, foreground, background, attrs)
+    return win10color.colored(string, foreground, background, attrs)
