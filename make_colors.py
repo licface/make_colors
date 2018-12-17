@@ -1,4 +1,5 @@
 import os
+import re
 class Win10Colors(object):
     """docstring for Win10Colors"""
     def __init__(self):
@@ -102,11 +103,93 @@ class Win10Colors(object):
 
         return "[%s;%s%s[0m" % (background[:-1], foreground, string)
 
+def getSort(data):
+    if "-" in data or "_" in data:
+        foreground, background = re.split("-|_", data)
+        # 'black': '40m',
+        #         'red': '41m',
+        #         'green': '42m',
+        #         'yellow': '43m',
+        #         'blue': '44m',
+        #         'magenta': '45m',
+        #         'cyan': '46m',
+        #         'white': '47m',
+
+        if foreground == 'b':
+            foreground = 'black'
+        elif foreground == 'bl':
+            foreground = 'blue'
+        elif foreground == 'r':
+            foreground = 'red'
+        elif foreground == 'g':
+            foreground = 'green'
+        elif foreground == 'y':
+            foreground = 'yellow'
+        elif foreground == 'm':
+            foreground = 'magenta'
+        elif foreground == 'c':
+            foreground = 'cyan'
+        elif foreground == 'w':
+            foreground = 'white'
+        elif foreground == 'lb':
+            foreground = 'lightblue'
+        elif foreground == 'lr':
+            foreground = 'lightred'
+        elif foreground == 'lg':
+            foreground = 'lightgreen'
+        elif foreground == 'ly':
+            foreground = 'lightyellow'
+        elif foreground == 'lm':
+            foreground = 'lightmagenta'
+        elif foreground == 'lc':
+            foreground = 'lightcyan'
+        elif foreground == 'lw':
+            foreground = 'lightwhite'
+        else:
+            foreground = 'lightwhite'
+
+        if background == 'b':
+            background = 'black'
+        elif background == 'bl':
+            background = 'blue'
+        elif background == 'r':
+            background = 'red'
+        elif background == 'g':
+            background = 'green'
+        elif background == 'y':
+            background = 'yellow'
+        elif background == 'm':
+            background = 'magenta'
+        elif background == 'c':
+            background = 'cyan'
+        elif background == 'w':
+            background = 'white'
+        elif background == 'lb':
+            background = 'lightblue'
+        elif background == 'lr':
+            background = 'lightred'
+        elif background == 'lg':
+            background = 'lightgreen'
+        elif background == 'ly':
+            background = 'lightyellow'
+        elif background == 'lm':
+            background = 'lightmagenta'
+        elif background == 'lc':
+            background = 'lightcyan'
+        elif background == 'lw':
+            background = 'lightwhite'
+        else:
+            background = 'black'
+    return foreground, background
+
 def make_colors(string, foreground = 'white', background=None, attrs=[]):
+    # print "foreground 0 =", foreground
+    if "-" in foreground or "_" in foreground:
+        foreground, background = getSort(foreground)
     win10color = Win10Colors()
     if os.getenv('MAKE_COLORS') == '0':
-    		return string
+		return string
     elif os.getenv('MAKE_COLORS') == '1':
-    		return win10color.colored(string, foreground, background, attrs)
+		return win10color.colored(string, foreground, background, attrs)
     else:
-    		return win10color.colored(string, foreground, background, attrs)
+		return win10color.colored(string, foreground, background, attrs)
