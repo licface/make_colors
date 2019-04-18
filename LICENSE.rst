@@ -1,4 +1,4 @@
-Copyright © 2014 by the Pallets team.
+Copyright © 2019 by the cumulus13 team.
 
 Some rights reserved.
 
@@ -32,8 +32,8 @@ SUCH DAMAGE.
 
 ----
 
-Click uses parts of optparse written by Gregory P. Ward and maintained
-by the Python Software Foundation. This is limited to code in parser.py.
+make_colors uses parts of optparse written by Hadi Cahyadi, LD. Ward and maintained
+by the Python Software Foundation.
 
-Copyright © 2001-2006 Gregory P. Ward. All rights reserved.
+Copyright © 2017-2019 Hadi Cahyadi, LD. All rights reserved.
 Copyright © 2002-2006 Python Software Foundation. All rights reserved.
