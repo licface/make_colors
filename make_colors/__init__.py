@@ -1,1 +1,1 @@
-from make_colors import make_colors
+from .make_colors import make_colors
